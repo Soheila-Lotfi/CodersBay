@@ -30,7 +30,7 @@ $("#submit-bid").click(function(event){
         highPrice=parseInt(bidderPrice);
         highBidder=bidderName;
 
-        database.ref().set({
+        database.ref('/data').set({
 
             highprice:highPrice,
             highbidder: highBidder
@@ -41,6 +41,23 @@ $("#submit-bid").click(function(event){
 
     }
 });
+
+database.ref('/data').on("value", function(snapshot){
+
+    if (snapshot.child("highbidder").exists() && snapshot.child("highprice").exists()){
+
+        highPrice=parseInt(snapshot.val().highprice);
+        highBidder=snapshot.val().highbidder;
+
+        $("#highest-bidder").text(snapshot.val().highbidder);
+        $("#highest-price").text(parseInt(snapshot.val().highprice));
+    }
+    else{
+        $("#highest-bidder").text(highBidder);
+        $("#highest-price").text(highPrice);
+    }
+  
+})
 
 
 
