@@ -9,7 +9,40 @@ var config={
     appId: "1:59547803136:web:89a23612e065ea87"
 }
 
-database.initializApp(config);
+
+firebase.initializeApp(config);
 
 var database=firebase.database();
+
+var highPrice=0;
+var highBidder= "no one:("
+
+$("#submit-bid").click(function(event){
+  
+    event.preventDefault();
+
+    var bidderName=$("#bidder-name").val().trim();
+    var bidderPrice=$("#bidder-price").val().trim();
+
+    if (bidderPrice>highPrice){
+        
+        alert("You are now the highest bidder.");
+        highPrice=parseInt(bidderPrice);
+        highBidder=bidderName;
+
+        database.ref().set({
+
+            highprice:highPrice,
+            highbidder: highBidder
+        });
+    }
+    else{
+        alert("Sorry that bid is too low. Try again.");
+
+    }
+});
+
+
+
+
 
