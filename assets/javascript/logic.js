@@ -15,7 +15,9 @@ firebase.initializeApp(config);
 var database=firebase.database();
 
 var highPrice=0;
-var highBidder= "no one:("
+var highBidder= "no one:(";
+
+// Whenever a user clicks the submit-bid button
 
 $("#submit-bid").click(function(event){
   
@@ -41,6 +43,9 @@ $("#submit-bid").click(function(event){
 
     }
 });
+
+// At the page load and subsequent value changes, get a snapshot of the local data.
+// This function allows you to update your page in real-time when the values within the firebase node bidderData changes
 
 database.ref('/data').on("value", function(snapshot){
 
